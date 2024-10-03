@@ -1,0 +1,76 @@
+<div
+  class="modal fade"
+  id="transactionModal"
+  tabindex="-1"
+  aria-labelledby="transactionModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          {{ isEditing ? "Edit" : "Add" }} Transaction
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="transactionForm" (ngSubmit)="onSave()">
+          <div class="mb-3">
+            <input
+              formControlName="title"
+              class="form-control"
+              placeholder="Title"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <ng-select [items]="transactionTypes" formControlName="type">
+            </ng-select>
+          </div>
+          <div class="mb-3">
+            <ng-select [items]="transactionTypes" formControlName="type2">
+            </ng-select>
+          </div>
+          <div class="mb-3">
+            <ng-select [items]="transactionTypes" formControlName="disabled">
+            </ng-select>
+          </div>
+          <div class="mb-3">
+            <ng-select [items]="transactionTypes" class="ng-warning">
+            </ng-select>
+          </div>
+          <div class="mb-3">
+            <input
+              formControlName="amount"
+              type="number"
+              class="form-control"
+              placeholder="Amount"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <input
+              formControlName="disabled"
+              type="number"
+              class="form-control"
+              placeholder="Amount"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary w-100"
+            [disabled]="transactionForm.invalid"
+          >
+            {{ isEditing ? "Update" : "Add" }} Transaction
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

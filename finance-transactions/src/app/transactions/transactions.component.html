@@ -1,0 +1,30 @@
+<div class="container my-5">
+  <h2 class="text-center mb-4">Transaction Manager</h2>
+
+  <!-- Componente de pesquisa -->
+  <app-transaction-search
+    (search)="filterTransactions($event)"
+  ></app-transaction-search>
+
+  <!-- Botão para abrir o modal de adicionar transação -->
+  <button (click)="openModal()" class="btn btn-success mb-3">
+    Add Transaction
+  </button>
+
+  <!-- Componente de lista de transações -->
+  <app-transaction-list
+    [transactions]="filteredTransactions$()"
+    (edit)="openModal($event)"
+    (delete)="deleteTransaction($event)"
+  >
+  </app-transaction-list>
+
+  <!-- Modal de criação/edição -->
+  <app-transaction-form
+    [transaction]="selectedTransaction"
+    [isEditing]="isEditing"
+    (save)="saveTransaction($event)"
+    (close)="closeModal()"
+  >
+  </app-transaction-form>
+</div>

@@ -1,0 +1,70 @@
+@import "@ng-select/ng-select/scss/default.theme.scss";
+
+@mixin ng-select-validation-state(
+  $state,
+  $color,
+  $icon,
+  $tooltip-color: color-contrast($color),
+  $tooltip-bg-color: rgba($color, $form-feedback-tooltip-opacity),
+  $focus-box-shadow: 0 0 $input-btn-focus-blur $input-focus-width
+    rgba($color, $input-btn-focus-color-opacity),
+  $border-color: $color
+) {
+  // Custom styles for ng-select validation
+
+  .ng-select#{if(&, "&", "")}.ng-#{$state} {
+    .ng-select-container {
+      color: $color;
+      border-color: $border-color;
+
+      @include form-validation-state-selector($state) {
+        border-color: $border-color;
+        @if $enable-validation-icons {
+          padding-right: $input-height-inner;
+          background-image: escape-svg($icon);
+          background-repeat: no-repeat;
+          background-position: right $input-height-inner-quarter center;
+          background-size: $input-height-inner-half $input-height-inner-half;
+        }
+      }
+    }
+
+    &.ng-select-focused > .ng-select-container {
+      border-color: $border-color;
+      @if $enable-shadows {
+        @include box-shadow($input-box-shadow, $focus-box-shadow);
+      } @else {
+        // Avoid using mixin so we can pass custom focus shadow properly
+        box-shadow: $focus-box-shadow;
+      }
+    }
+
+    .ng-select-dropdown {
+      border-color: $border-color;
+    }
+  }
+}
+.ng-select {
+  .ng-select-container {
+    min-height: 38px;
+    font-family: $form-select-font-family;
+    @include font-size($form-select-font-size);
+    font-weight: $form-select-font-weight;
+    line-height: $form-select-line-height;
+    color: $form-select-color;
+    appearance: none;
+    background-color: $form-select-bg;
+    background-image: var(--#{$prefix}form-select-bg-img),
+      var(--#{$prefix}form-select-bg-icon, none);
+    background-repeat: no-repeat;
+    background-position: $form-select-bg-position;
+    background-size: $form-select-bg-size;
+    border: $form-select-border-width solid $form-select-border-color;
+    @include border-radius($form-select-border-radius, 0);
+    @include box-shadow($form-select-box-shadow);
+  }
+}
+
+@each $state, $data in $form-validation-states {
+  @include ng-select-validation-state($state, $data...);
+}
